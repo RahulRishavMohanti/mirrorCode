@@ -530,6 +530,7 @@ function timeNow() {
     }
 
 function startDictation() {
+	document.getElementById("assistant").innerHTML="Busy day huh?";
 
 	if (window.hasOwnProperty('webkitSpeechRecognition')) {
 
@@ -542,6 +543,7 @@ function startDictation() {
 		recognition.start();
 
 		recognition.onresult = function(e) {
+			console.log("A result came in");
 			var l=e.results.length;
 			console.log(e.results[l-1][0].transcript);
 			var a=String(e.results[l-1][0].transcript);
@@ -588,11 +590,21 @@ else{
 
 		}
 		};
+		recognition.onend = function() {
+		console.log("ended once");
+    recognition.start();
+};
+    recognition.onstart = function() {
+			console.log("Started Recording");
+
+		}
 
 		recognition.onerror = function(e) {
+			console.log(e);
+			recognition.start();
 			console.log("ho gaya na");
 
-			recognition.stop();
+			//recognition.stop();
 		}
 
 	}
